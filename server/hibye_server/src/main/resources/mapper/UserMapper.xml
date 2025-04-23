@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hibye_server.hibye_server.mapper.UserMapper">
+    <insert id="registerUser" parameterType="com.hibye_server.hibye_server.model.User">
+          INSERT INTO users (id, nickname, password, skintype, profile_pic)
+          VALUES (#{id}, #{nickname}, #{password}, #{skintype}, #{profile_pic});
+    </insert>
+    
+    <select id="checkIdExist" resultType="boolean">
+      SELECT COUNT(*) > 0 FROM users WHERE id = #{id} AND is_deleted = false
+    </select>
+
+    <select id="checkNickExist" resultType="boolean">
+      SELECT COUNT(*) > 0 FROM users WHERE nickname = #{nickname} AND is_deleted = false
+    </select>
+
+    <select id="loginUser" parameterType="com.hibye_server.hibye_server.model.User" resultType="com.hibye_server.hibye_server.model.User">
+        SELECT * FROM users WHERE id = #{id}AND is_deleted = false
+    </select>
+
+    <update id="updateUser" parameterType="com.hibye_server.hibye_server.model.User">
+        UPDATE users
+        SET nickname = #{nickname}, password = #{password}, skintype = #{skintype}, profile_pic = #{profile_pic}
+        WHERE id = #{id} AND is_deleted = false;
+    </update>
+
+    <select id="findByNickname" parameterType="string" resultType="com.hibye_server.hibye_server.model.User">
+    SELECT * FROM users WHERE nickname = #{nickname} AND is_deleted = false;
+    </select>
+
+    <update id="markUserAsDeleted" parameterType="string">
+   UPDATE users SET is_deleted = true WHERE id = #{id}
+    </update>
+
+
+
+
+</mapper>
+

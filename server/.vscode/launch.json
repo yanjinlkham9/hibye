@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-HibyeServerApplication<hibye_server>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hibye_server.hibye_server.HibyeServerApplication",
+      "projectName": "hibye_server",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

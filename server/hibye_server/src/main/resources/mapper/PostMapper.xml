@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<mapper namespace="com.hibye_server.hibye_server.mapper.PostMapper">
+    <insert id="addPost" parameterType="com.hibye_server.hibye_server.model.Post">
+        INSERT INTO posts (post_title, category, post_detail, image_paths, user_id)
+        VALUES (#{title}, #{category}, #{content}, #{imagePaths}, #{userId})
+    </insert>
+
+    <select id="findAllPosts" resultType="com.hibye_server.hibye_server.model.Post">
+    SELECT 
+        p.post_id AS id,
+        p.post_title AS title,
+        p.image_paths AS imagePaths,
+        p.created_at AS createdAt,
+        p.category AS category,
+        p.user_id AS userId,
+        u.nickname AS nickname,
+        u.profile_pic AS profile_pic
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    ORDER BY p.created_at DESC
+    LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findPostById" resultType="com.hibye_server.hibye_server.model.Post">
+    SELECT 
+        p.post_id AS id,
+        p.post_title AS title,
+        p.category AS category,
+        p.post_detail AS content,
+        p.image_paths AS imagePaths,
+        p.created_at AS createdAt,
+        p.user_id AS userId,
+        u.nickname AS nickname,
+        u.profile_pic AS profile_pic
+        
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.post_id = #{id}
+</select>
+
+
+  <select id="selectPostsByUserId" resultType="com.hibye_server.hibye_server.model.Post">
+        SELECT  p.post_id AS id,
+        p.post_title AS title,
+        p.category AS category,
+        p.post_detail AS content,
+        p.image_paths AS imagePaths,
+        p.created_at AS createdAt,
+        p.user_id AS userId,
+        u.nickname AS nickname FROM posts p 
+        JOIN users u ON p.user_id = u.id
+        WHERE p.user_id = #{userId}
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+    <select id="countPostsByUserId" resultType="int">
+        SELECT COUNT(*) FROM posts WHERE user_id = #{userId}
+    </select>
+
+   <select id="getPostsByCategory" resultType="com.hibye_server.hibye_server.model.Post">
+    SELECT p.post_id AS id,
+           p.post_title AS title,
+           p.category,
+           p.post_detail AS content,
+           p.image_paths AS imagePaths,
+           p.created_at AS createdAt,
+           p.user_id AS userId,
+           u.nickname,
+           u.profile_pic
+
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.category = #{category}
+    ORDER BY p.created_at DESC
+</select>
+    <select id="countAllPosts" resultType="int">
+  SELECT COUNT(*) FROM posts
+</select>
+
+<select id="countCommentsByPostId" resultType="int">
+  SELECT COUNT(*) FROM comments WHERE post_id = #{postId}
+</select>
+
+<select id="selectPostsByCategory" resultType="com.hibye_server.hibye_server.model.Post">
+  SELECT p.post_id AS id,
+           p.post_title AS title,
+           p.category,
+           p.post_detail AS content,
+           p.image_paths AS imagePaths,
+           p.created_at AS createdAt,
+           p.user_id AS userId,
+           u.nickname,
+           u.profile_pic FROM posts p
+             JOIN users u ON p.user_id = u.id
+  WHERE p.category = #{category}
+  ORDER BY created_at DESC
+  LIMIT #{size} OFFSET #{offset}
+</select>
+
+<select id="countPostsByCategory" resultType="int">
+  SELECT COUNT(*) FROM posts WHERE category = #{category}
+</select>
+</mapper>
