@@ -1,0 +1,39 @@
+/* Header.css */
+
+header {
+  background-color: #c36975;
+  color: white;
+  padding: 10px 20px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+nav ul li a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
